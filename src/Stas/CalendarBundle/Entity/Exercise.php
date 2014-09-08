@@ -1,6 +1,6 @@
 <?php
 
-namespace Stas\SportCalendarBundle\Entity;
+namespace Stas\CalendarBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

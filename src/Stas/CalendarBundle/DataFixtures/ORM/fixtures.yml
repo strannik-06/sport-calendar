@@ -1,0 +1,7 @@
+Stas\CalendarBundle\Entity\Exercise:
+    exercise{300..400}:
+        shortDescription: <randomElement(['Press of a bar', 'Bumbbell bench press', 'Barbell press seated incline'])>
+        weight: <numberBetween(20, 200)>
+        amount: <numberBetween(5, 15)>
+        date: <dateTimeBetween('-30 days', '+ 1 day')>
+        time: <dateTime()>

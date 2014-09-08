@@ -1,0 +1,3 @@
+stas_calendar_exercise_index:
+    path:     /calendar
+    defaults: { _controller: StasCalendarBundle:Exercise:index }

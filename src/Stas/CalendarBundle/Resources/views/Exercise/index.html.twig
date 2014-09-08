@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets '@StasCalendarBundle/Resources/css/style.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <h1>Hi men</h1>
+    <h2>Check what you did in last 3 trainings</h2>
+    <table class="results-table">
+        <tr>
+            <th>two week ago ({{ "2 week ago"|date("m/d/Y") }})</th>
+            <th>week ago ({{ "1 week ago"|date("m/d/Y") }})</th>
+            <th>today ({{ "now"|date("m/d/Y") }})</th>
+        </tr>
+        <tr>
+        {% for resultDay in results %}
+            <td>
+                <table>
+                {% for result in resultDay %}
+                    <tr>
+                        <td>{{ result.shortDescription }}</td>
+                        <td class="right">{{ result.weight }}kg X {{ result.amount }}</td>
+                    </tr>
+                {% endfor %}
+                 </table>
+            </td>
+        {% endfor %}
+        </tr>
+    </table>
+{% endblock %}
