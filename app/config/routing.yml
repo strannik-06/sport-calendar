@@ -1,0 +1,5 @@
+stas_sport_calendar:
+    resource: "@StasSportCalendarBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
