@@ -14,9 +14,11 @@ class ExerciseController extends Controller
      */
     public function indexAction()
     {
+        $user = $this->getUser();
+
         /** @var ExerciseService $exerciseService */
         $exerciseService = $this->get('stas.calendar.service.exercise');
-        $results = $exerciseService->getLastResults();
+        $results = $exerciseService->getLastResults($user);
 
         return $this->render('StasCalendarBundle:Exercise:index.html.twig',
             array('results' => $results));

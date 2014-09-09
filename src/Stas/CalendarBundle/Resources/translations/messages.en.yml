@@ -1,0 +1,8 @@
+stas.calendar.index.title: "Calendar"
+stas.calendar.index.header: "Hi %name!"
+stas.calendar.index.intro: "Check what you did in last 3 trainings"
+stas.calendar.index.twoWeekAgo: "two week ago"
+stas.calendar.index.oneWeekAgo: "one week ago"
+stas.calendar.index.today: "today"
+stas.calendar.index.kg: "kg"
+stas.calendar.index.logout: "Logout"

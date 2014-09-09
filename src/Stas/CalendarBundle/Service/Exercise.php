@@ -2,6 +2,7 @@
 namespace Stas\CalendarBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Stas\CalendarBundle\Entity\User;
 
 /**
  * Service for Exercise entity
@@ -9,34 +10,41 @@ use Doctrine\ORM\EntityManager;
 class Exercise
 {
     /** @var \Doctrine\ORM\EntityManager */
-    private $_entityManager;
+    protected $entityManager;
 
     /**
      * @param EntityManager     $entityManager
      */
     public function __construct(EntityManager $entityManager)
     {
-        $this->_entityManager = $entityManager;
+        $this->entityManager = $entityManager;
     }
 
     /**
+     * @param User      $user
      * @param \DateTime $currentDate
      *
      * @return array
      */
-    public function getLastResults($currentDate = null)
+    public function getLastResults(User $user, \DateTime $currentDate = null)
     {
-        $repository = $this->_entityManager->getRepository('Stas\CalendarBundle\Entity\Exercise');
+        if (!isset($currentDate)) {
+            $currentDate = new \DateTime();
+        }
+        $repository = $this->entityManager->getRepository('Stas\CalendarBundle\Entity\Exercise');
 
         return array(
-            'two-week-ago' => $repository->findBy(array(
-                'date' => new \DateTime('2 week ago'),
+            'today' => $repository->findBy(array(
+                'user' => $user,
+                'date' => $currentDate,
             )),
             'one-week-ago' => $repository->findBy(array(
-                'date' => new \DateTime('1 week ago'),
+                'user' => $user,
+                'date' => $currentDate->modify('- 1 week'),
             )),
-            'now' => $repository->findBy(array(
-                'date' => new \DateTime(),
+            'two-week-ago' => $repository->findBy(array(
+                'user' => $user,
+                'date' => $currentDate->modify('- 1 week'),
             )),
         );
     }

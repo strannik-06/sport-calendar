@@ -1,0 +1,8 @@
+stas.calendar.index.title: "Календарь"
+stas.calendar.index.header: "Здорово %name!"
+stas.calendar.index.intro: "Вот что ты сделал за последние 3 тренировки"
+stas.calendar.index.twoWeekAgo: "две недели назад"
+stas.calendar.index.oneWeekAgo: "одну неделю назад"
+stas.calendar.index.today: "сегодня"
+stas.calendar.index.kg: "кг"
+stas.calendar.index.logout: "Выход"

@@ -3,6 +3,7 @@
 namespace Stas\CalendarBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Stas\CalendarBundle\Entity\User;
 
 /**
  * Exercise
@@ -55,6 +56,14 @@ class Exercise
      * @ORM\Column(name="time", type="time")
      */
     private $time;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Stas\CalendarBundle\Entity\User", inversedBy="exercises")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    protected $user;
 
 
     /**
@@ -185,5 +194,21 @@ class Exercise
     public function getTime()
     {
         return $this->time;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

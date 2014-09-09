@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}Calendar{% endblock %}
+{% block title %}{{ 'stas.calendar.index.title'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {% stylesheets '@StasCalendarBundle/Resources/css/style.css' %}
@@ -9,22 +9,24 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Hi men</h1>
-    <h2>Check what you did in last 3 trainings</h2>
+    <h1>{{ 'stas.calendar.index.header'|trans({'%name' : app.user.username}) }}</h1>
+    <h2>{{ 'stas.calendar.index.intro'|trans }}</h2>
     <table class="results-table">
         <tr>
-            <th>two week ago ({{ "2 week ago"|date("m/d/Y") }})</th>
-            <th>week ago ({{ "1 week ago"|date("m/d/Y") }})</th>
-            <th>today ({{ "now"|date("m/d/Y") }})</th>
+            <th>{{ 'stas.calendar.index.twoWeekAgo'|trans }} ({{ "2 week ago"|date("m/d/Y") }})</th>
+            <th>{{ 'stas.calendar.index.oneWeekAgo'|trans }} ({{ "1 week ago"|date("m/d/Y") }})</th>
+            <th>{{ 'stas.calendar.index.today'|trans }} ({{ "now"|date("m/d/Y") }})</th>
         </tr>
         <tr>
-        {% for resultDay in results %}
+        {% for key in ['two-week-ago', 'one-week-ago', 'today'] %}
             <td>
                 <table>
-                {% for result in resultDay %}
+                {% for result in results[key] %}
                     <tr>
                         <td>{{ result.shortDescription }}</td>
-                        <td class="right">{{ result.weight }}kg X {{ result.amount }}</td>
+                        <td class="right">
+                            {{ result.weight }}{{ 'stas.calendar.index.kg'|trans }} X {{ result.amount }}
+                        </td>
                     </tr>
                 {% endfor %}
                  </table>
@@ -32,4 +34,6 @@
         {% endfor %}
         </tr>
     </table>
+
+    <p><a href="{{ path('logout') }}">{{ 'stas.calendar.index.logout'|trans }}</a></p>
 {% endblock %}
