@@ -81,6 +81,8 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLastResults()
     {
+        //todo: it's better if $currentDate is some fixed date.
+        // Then you do not need to modify it. Just set manually these 3 dates in the test. And check with them.
         $currentDate = new \DateTime();
         $expectedResult = array(
             'today' => $this->entityMock,
