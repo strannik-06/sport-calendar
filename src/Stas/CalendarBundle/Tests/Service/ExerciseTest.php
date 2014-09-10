@@ -96,6 +96,7 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
             ->with('Stas\CalendarBundle\Entity\Exercise')
             ->will($this->returnValue($this->repositoryMock));
 
+        //todo: $this->returnValueMap() could simplify this
         $this->repositoryMock->expects($this->at(0))
             ->method('findBy')
             ->with(array('user' => $this->userMock, 'date' => $currentDate))
