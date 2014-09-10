@@ -81,7 +81,11 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLastResults()
     {
+        //todo: it's better if $currentDate is some fixed date.
+        // Then you do not need to modify it. Just set manually these 3 dates in the test. And check with them.
         $currentDate = new \DateTime();
+        //todo: Incorrect expected data type. In real code array will contain 3 arrays with entities.
+        // In test you are checking that it is not array of entities, but one entity
         $expectedResult = array(
             'today' => $this->entityMock,
             'one-week-ago' => $this->entityMock,
@@ -92,6 +96,7 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
             ->with('Stas\CalendarBundle\Entity\Exercise')
             ->will($this->returnValue($this->repositoryMock));
 
+        //todo: $this->returnValueMap() could simplify this
         $this->repositoryMock->expects($this->at(0))
             ->method('findBy')
             ->with(array('user' => $this->userMock, 'date' => $currentDate))

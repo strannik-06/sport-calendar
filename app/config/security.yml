@@ -12,6 +12,7 @@ security:
                 check_path: login_check
             logout: ~
 
+        # this firewall is not used
         default:
             anonymous: ~
 
