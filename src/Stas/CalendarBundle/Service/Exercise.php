@@ -21,15 +21,15 @@ class Exercise
     }
 
     /**
-     * @param User      $user
-     * @param \DateTime $currentDate
+     * @param User   $user
+     * @param string $currentDate
      *
      * @return array
      */
-    public function getLastResults(User $user, \DateTime $currentDate = null)
+    public function getLastResults(User $user, $currentDate = null)
     {
         if (!isset($currentDate)) {
-            $currentDate = new \DateTime();
+            $currentDate = date('Y-m-d');
         }
         $repository = $this->entityManager->getRepository('Stas\CalendarBundle\Entity\Exercise');
 
@@ -40,11 +40,11 @@ class Exercise
             )),
             'one-week-ago' => $repository->findBy(array(
                 'user' => $user,
-                'date' => $currentDate->sub(\DateInterval::createFromDateString('1 week')),
+                'date' => date('Y-m-d', strtotime("$currentDate - 1 week")),
             )),
             'two-week-ago' => $repository->findBy(array(
                 'user' => $user,
-                'date' => $currentDate->sub(\DateInterval::createFromDateString('2 weeks')),
+                'date' => date('Y-m-d', strtotime("$currentDate - 2 week")),
             )),
         );
     }

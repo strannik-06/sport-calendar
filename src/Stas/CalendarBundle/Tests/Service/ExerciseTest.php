@@ -74,15 +74,18 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLastResults()
     {
+        $mock1 = $this->getMockBuilder('Stas\CalendarBundle\Entity\Exercise')->getMock();
+        $mock2 = $this->getMockBuilder('Stas\CalendarBundle\Entity\Exercise')->getMock();
+        $mock3 = $this->getMockBuilder('Stas\CalendarBundle\Entity\Exercise')->getMock();
         $expectedResult = array(
-            'today' => array(1),
-            'one-week-ago' => array(2),
-            'two-week-ago' => array(3),
+            'today' => array($mock1),
+            'one-week-ago' => array($mock2),
+            'two-week-ago' => array($mock3),
         );
 
-        $currentDate = new \DateTime('2014-09-10');
-        $oneWeekAgo = $currentDate->sub(\DateInterval::createFromDateString('1 week'));
-        $twoWeeksAgo = $currentDate->sub(\DateInterval::createFromDateString('2 weeks'));
+        $currentDate = '2014-09-10';
+        $oneWeekAgo = '2014-09-03';
+        $twoWeeksAgo = '2014-08-27';
 
         $this->entityManagerMock->expects($this->once())->method('getRepository')
             ->with('Stas\CalendarBundle\Entity\Exercise')
@@ -90,9 +93,9 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
 
         $this->repositoryMock->expects($this->exactly(3))->method('findBy')
             ->will($this->returnValueMap(array(
-                array(array('user' => $this->userMock, 'date' => $currentDate), null, null, null, array(1)),
-                array(array('user' => $this->userMock, 'date' => $oneWeekAgo), null, null, null, array(2)),
-                array(array('user' => $this->userMock, 'date' => $twoWeeksAgo), null, null, null, array(3)),
+                array(array('user' => $this->userMock, 'date' => $currentDate), null, null, null, array($mock1)),
+                array(array('user' => $this->userMock, 'date' => $oneWeekAgo), null, null, null, array($mock2)),
+                array(array('user' => $this->userMock, 'date' => $twoWeeksAgo), null, null, null, array($mock3)),
             )));
 
         $this->assertEquals($expectedResult, $this->service->getLastResults($this->userMock, $currentDate));
