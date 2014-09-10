@@ -12,10 +12,6 @@ security:
                 check_path: login_check
             logout: ~
 
-        # this firewall is not used
-        default:
-            anonymous: ~
-
     access_control:
         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: [ROLE_ADMIN] }

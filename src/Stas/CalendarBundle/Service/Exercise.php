@@ -40,11 +40,11 @@ class Exercise
             )),
             'one-week-ago' => $repository->findBy(array(
                 'user' => $user,
-                'date' => $currentDate->modify('- 1 week'),
+                'date' => $currentDate->sub(\DateInterval::createFromDateString('1 week')),
             )),
             'two-week-ago' => $repository->findBy(array(
                 'user' => $user,
-                'date' => $currentDate->modify('- 1 week'),
+                'date' => $currentDate->sub(\DateInterval::createFromDateString('2 weeks')),
             )),
         );
     }

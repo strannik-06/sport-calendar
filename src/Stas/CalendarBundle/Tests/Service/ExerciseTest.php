@@ -2,7 +2,6 @@
 namespace Stas\CalendarBundle\Tests\Service;
 
 use Stas\CalendarBundle\Service\Exercise as ExerciseService;
-use Stas\CalendarBundle\Entity\Exercise as ExerciseEntity;
 use Stas\CalendarBundle\Entity\User as UserEntity;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
@@ -16,9 +15,6 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
 {
     /** @var ExerciseService */
     protected $service;
-
-    /** @var \PHPUnit_Framework_MockObject_MockObject | ExerciseEntity */
-    protected $entityMock;
 
     /** @var \PHPUnit_Framework_MockObject_MockObject | UserEntity */
     protected $userMock;
@@ -36,8 +32,6 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
     {
         $this->initEntityManagerMock(array('getRepository'));
 
-        $this->entityMock = $this->getMockBuilder('Stas\CalendarBundle\Entity\Exercise')
-            ->getMock();
         $this->userMock = $this->getMockBuilder('Stas\CalendarBundle\Entity\User')
             ->getMock();
 
@@ -70,7 +64,6 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         unset($this->service);
-        unset($this->entityMock);
         unset($this->userMock);
         unset($this->repositoryMock);
         unset($this->entityManagerMock);
@@ -81,34 +74,26 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetLastResults()
     {
-        //todo: it's better if $currentDate is some fixed date.
-        // Then you do not need to modify it. Just set manually these 3 dates in the test. And check with them.
-        $currentDate = new \DateTime();
-        //todo: Incorrect expected data type. In real code array will contain 3 arrays with entities.
-        // In test you are checking that it is not array of entities, but one entity
         $expectedResult = array(
-            'today' => $this->entityMock,
-            'one-week-ago' => $this->entityMock,
-            'two-week-ago' => $this->entityMock,
+            'today' => array(1),
+            'one-week-ago' => array(2),
+            'two-week-ago' => array(3),
         );
+
+        $currentDate = new \DateTime('2014-09-10');
+        $oneWeekAgo = $currentDate->sub(\DateInterval::createFromDateString('1 week'));
+        $twoWeeksAgo = $currentDate->sub(\DateInterval::createFromDateString('2 weeks'));
 
         $this->entityManagerMock->expects($this->once())->method('getRepository')
             ->with('Stas\CalendarBundle\Entity\Exercise')
             ->will($this->returnValue($this->repositoryMock));
 
-        //todo: $this->returnValueMap() could simplify this
-        $this->repositoryMock->expects($this->at(0))
-            ->method('findBy')
-            ->with(array('user' => $this->userMock, 'date' => $currentDate))
-            ->will($this->returnValue($this->entityMock));
-        $this->repositoryMock->expects($this->at(1))
-            ->method('findBy')
-            ->with(array('user' => $this->userMock, 'date' => $currentDate->modify('- 1 week')))
-            ->will($this->returnValue($this->entityMock));
-        $this->repositoryMock->expects($this->at(2))
-            ->method('findBy')
-            ->with(array('user' => $this->userMock, 'date' => $currentDate->modify('- 1 week')))
-            ->will($this->returnValue($this->entityMock));
+        $this->repositoryMock->expects($this->exactly(3))->method('findBy')
+            ->will($this->returnValueMap(array(
+                array(array('user' => $this->userMock, 'date' => $currentDate), null, null, null, array(1)),
+                array(array('user' => $this->userMock, 'date' => $oneWeekAgo), null, null, null, array(2)),
+                array(array('user' => $this->userMock, 'date' => $twoWeeksAgo), null, null, null, array(3)),
+            )));
 
         $this->assertEquals($expectedResult, $this->service->getLastResults($this->userMock, $currentDate));
     }
