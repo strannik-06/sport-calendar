@@ -91,12 +91,17 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
             ->with('Stas\CalendarBundle\Entity\Exercise')
             ->will($this->returnValue($this->repositoryMock));
 
-        $this->repositoryMock->expects($this->exactly(3))->method('findBy')
-            ->will($this->returnValueMap(array(
-                array(array('user' => $this->userMock, 'date' => $currentDate), null, null, null, array($mock1)),
-                array(array('user' => $this->userMock, 'date' => $oneWeekAgo), null, null, null, array($mock2)),
-                array(array('user' => $this->userMock, 'date' => $twoWeeksAgo), null, null, null, array($mock3)),
-            )));
+        $this->repositoryMock->expects($this->at(0))->method('findBy')
+            ->with(array('user' => $this->userMock, 'date' => new \DateTime($currentDate)), null, null, null)
+            ->will($this->returnValue(array($mock1)));
+
+        $this->repositoryMock->expects($this->at(1))->method('findBy')
+            ->with(array('user' => $this->userMock, 'date' => new \DateTime($oneWeekAgo)), null, null, null)
+            ->will($this->returnValue(array($mock2)));
+
+        $this->repositoryMock->expects($this->at(2))->method('findBy')
+            ->with(array('user' => $this->userMock, 'date' => new \DateTime($twoWeeksAgo)), null, null, null)
+            ->will($this->returnValue(array($mock3)));
 
         $this->assertEquals($expectedResult, $this->service->getLastResults($this->userMock, $currentDate));
     }

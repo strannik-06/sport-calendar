@@ -36,15 +36,15 @@ class Exercise
         return array(
             'today' => $repository->findBy(array(
                 'user' => $user,
-                'date' => $currentDate,
+                'date' => new \DateTime($currentDate),
             )),
             'one-week-ago' => $repository->findBy(array(
                 'user' => $user,
-                'date' => date('Y-m-d', strtotime("$currentDate - 1 week")),
+                'date' => new \DateTime(date('Y-m-d', strtotime("$currentDate - 1 week"))),
             )),
             'two-week-ago' => $repository->findBy(array(
                 'user' => $user,
-                'date' => date('Y-m-d', strtotime("$currentDate - 2 week")),
+                'date' => new \DateTime(date('Y-m-d', strtotime("$currentDate - 2 week"))),
             )),
         );
     }
