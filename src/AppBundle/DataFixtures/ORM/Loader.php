@@ -1,10 +1,13 @@
 <?php
 
-namespace Stas\CalendarBundle\DataFixtures\ORM;
+namespace AppBundle\DataFixtures\ORM;
 
 use Hautelook\AliceBundle\Alice\DataFixtureLoader;
 use Nelmio\Alice\Fixtures;
 
+/**
+ * Class Loader
+ */
 class Loader extends DataFixtureLoader
 {
     /**

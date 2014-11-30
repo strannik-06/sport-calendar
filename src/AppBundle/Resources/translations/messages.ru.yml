@@ -1,0 +1,8 @@
+index.title: "Календарь"
+index.header: "Здорово %name!"
+index.intro: "Вот что ты сделал за последние 3 тренировки"
+index.twoWeekAgo: "две недели назад"
+index.oneWeekAgo: "одну неделю назад"
+index.today: "сегодня"
+index.kg: "кг"
+index.logout: "Выход"

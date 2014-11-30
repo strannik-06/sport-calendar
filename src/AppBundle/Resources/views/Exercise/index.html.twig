@@ -1,0 +1,39 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'index.title'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets '@AppBundle/Resources/css/style.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'index.header'|trans({'%name' : app.user.username}) }}</h1>
+    <h2>{{ 'index.intro'|trans }}</h2>
+    <table class="results-table">
+        <tr>
+            <th>{{ 'index.twoWeekAgo'|trans }} ({{ "2 week ago"|date("m/d/Y") }})</th>
+            <th>{{ 'index.oneWeekAgo'|trans }} ({{ "1 week ago"|date("m/d/Y") }})</th>
+            <th>{{ 'index.today'|trans }} ({{ "now"|date("m/d/Y") }})</th>
+        </tr>
+        <tr>
+        {% for key in ['two-week-ago', 'one-week-ago', 'today'] %}
+            <td>
+                <table>
+                {% for result in results[key] %}
+                    <tr>
+                        <td>{{ result.shortDescription }}</td>
+                        <td class="right">
+                            {{ result.weight }}{{ 'index.kg'|trans }} X {{ result.amount }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                 </table>
+            </td>
+        {% endfor %}
+        </tr>
+    </table>
+
+    <p><a href="{{ path('logout') }}">{{ 'index.logout'|trans }}</a></p>
+{% endblock %}

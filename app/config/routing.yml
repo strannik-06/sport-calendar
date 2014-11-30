@@ -1,11 +1,11 @@
 stas_calendar:
-    resource: "@StasCalendarBundle/Resources/config/routing.yml"
+    resource: "@AppBundle/Resources/config/routing.yml"
     prefix: /{_locale}/
     requirements: { _locale: en|ru }
 
 login:
     path: /login
-    defaults: { _controller: StasCalendarBundle:Security:login }
+    defaults: { _controller: AppBundle:Security:login }
 login_check:
     path: /login_check
 logout:

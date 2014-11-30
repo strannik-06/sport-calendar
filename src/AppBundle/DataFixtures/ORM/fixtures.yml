@@ -1,4 +1,4 @@
-Stas\CalendarBundle\Entity\User:
+AppBundle\Entity\User:
     user{0}:
         username: stas
         password: stas
@@ -6,7 +6,7 @@ Stas\CalendarBundle\Entity\User:
         username (unique): <username()>
         password: <word()>
 
-Stas\CalendarBundle\Entity\Exercise:
+AppBundle\Entity\Exercise:
     exercise{800..1000}:
         shortDescription: <randomElement(['Press of a bar', 'Bumbbell bench press', 'Barbell press seated incline'])>
         weight: <numberBetween(20, 200)>

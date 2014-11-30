@@ -1,19 +1,19 @@
 <?php
-namespace Stas\CalendarBundle\Service;
+namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManager;
-use Stas\CalendarBundle\Entity\User;
+use AppBundle\Entity\User;
 
 /**
  * Service for Exercise entity
  */
 class Exercise
 {
-    /** @var \Doctrine\ORM\EntityManager */
+    /** @var EntityManager */
     protected $entityManager;
 
     /**
-     * @param EntityManager     $entityManager
+     * @param EntityManager $entityManager
      */
     public function __construct(EntityManager $entityManager)
     {
@@ -21,30 +21,34 @@ class Exercise
     }
 
     /**
-     * @param User   $user
-     * @param string $currentDate
+     * @param User      $user
+     * @param \DateTime $currentDate
      *
      * @return array
      */
-    public function getLastResults(User $user, $currentDate = null)
+    public function getLastResults(User $user, \DateTime $currentDate = null)
     {
         if (!isset($currentDate)) {
-            $currentDate = date('Y-m-d');
+            $currentDate = new \DateTime();
         }
-        $repository = $this->entityManager->getRepository('Stas\CalendarBundle\Entity\Exercise');
+        $oneWeekAgo = clone $currentDate;
+        $oneWeekAgo->modify('- 1 week');
+        $twoWeekAgo = clone $currentDate;
+        $twoWeekAgo->modify('- 2 week');
+        $repository = $this->entityManager->getRepository('AppBundle\Entity\Exercise');
 
         return array(
             'today' => $repository->findBy(array(
                 'user' => $user,
-                'date' => new \DateTime($currentDate),
+                'date' => $currentDate,
             )),
             'one-week-ago' => $repository->findBy(array(
                 'user' => $user,
-                'date' => new \DateTime(date('Y-m-d', strtotime("$currentDate - 1 week"))),
+                'date' => $oneWeekAgo,
             )),
             'two-week-ago' => $repository->findBy(array(
                 'user' => $user,
-                'date' => new \DateTime(date('Y-m-d', strtotime("$currentDate - 2 week"))),
+                'date' => $twoWeekAgo,
             )),
         );
     }

@@ -1,8 +1,9 @@
 <?php
-namespace Stas\CalendarBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Stas\CalendarBundle\Service\Exercise as ExerciseService;
+use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Service\Exercise as ExerciseService;
 
 /**
  * Class ExerciseController
@@ -10,17 +11,17 @@ use Stas\CalendarBundle\Service\Exercise as ExerciseService;
 class ExerciseController extends Controller
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function indexAction()
     {
         $user = $this->getUser();
 
         /** @var ExerciseService $exerciseService */
-        $exerciseService = $this->get('stas.calendar.service.exercise');
+        $exerciseService = $this->get('app.exercise');
         $results = $exerciseService->getLastResults($user);
 
-        return $this->render('StasCalendarBundle:Exercise:index.html.twig',
+        return $this->render('AppBundle:Exercise:index.html.twig',
             array('results' => $results));
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace Stas\CalendarBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Stas\CalendarBundle\Entity\User;
+use AppBundle\Entity\User;
 
 /**
  * Exercise
@@ -60,7 +60,7 @@ class Exercise
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="Stas\CalendarBundle\Entity\User", inversedBy="exercises")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="exercises")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $user;

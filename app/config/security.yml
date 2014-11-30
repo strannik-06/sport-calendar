@@ -1,7 +1,7 @@
 security:
     providers:
         user_db:
-            entity: { class: Stas\CalendarBundle\Entity\User, property: username }
+            entity: { class: AppBundle\Entity\User, property: username }
 
     firewalls:
         secured_area:
@@ -17,4 +17,4 @@ security:
         - { path: ^/, roles: [ROLE_ADMIN] }
 
     encoders:
-        Stas\CalendarBundle\Entity\User: plaintext
+        AppBundle\Entity\User: plaintext

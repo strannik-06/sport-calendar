@@ -1,0 +1,8 @@
+index.title: "Calendar"
+index.header: "Hi %name!"
+index.intro: "Check what you did in last 3 trainings"
+index.twoWeekAgo: "two week ago"
+index.oneWeekAgo: "one week ago"
+index.today: "today"
+index.kg: "kg"
+index.logout: "Logout"

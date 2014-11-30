@@ -1,12 +1,21 @@
 <?php
-namespace Stas\CalendarBundle\Controller;
+namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+/**
+ * Class SecurityController
+ */
 class SecurityController extends Controller
 {
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function loginAction(Request $request)
     {
         $session = $request->getSession();
@@ -27,7 +36,7 @@ class SecurityController extends Controller
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
 
         return $this->render(
-            'StasCalendarBundle:Security:login.html.twig',
+            'AppBundle:Security:login.html.twig',
             array(
                 // last username entered by the user
                 'last_username' => $lastUsername,

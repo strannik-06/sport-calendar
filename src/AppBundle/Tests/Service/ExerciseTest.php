@@ -1,8 +1,8 @@
 <?php
-namespace Stas\CalendarBundle\Tests\Service;
+namespace AppBundle\Tests\Service;
 
-use Stas\CalendarBundle\Service\Exercise as ExerciseService;
-use Stas\CalendarBundle\Entity\User as UserEntity;
+use AppBundle\Service\Exercise as ExerciseService;
+use AppBundle\Entity\User as UserEntity;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -32,7 +32,7 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
     {
         $this->initEntityManagerMock(array('getRepository'));
 
-        $this->userMock = $this->getMockBuilder('Stas\CalendarBundle\Entity\User')
+        $this->userMock = $this->getMockBuilder('AppBundle\Entity\User')
             ->getMock();
 
         $this->repositoryMock = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
@@ -70,37 +70,37 @@ class ExerciseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test for Stas\CalendarBundle\Service\Exercise::getLastResults
+     * Test for AppBundle\Service\Exercise::getLastResults
      */
     public function testGetLastResults()
     {
-        $mock1 = $this->getMockBuilder('Stas\CalendarBundle\Entity\Exercise')->getMock();
-        $mock2 = $this->getMockBuilder('Stas\CalendarBundle\Entity\Exercise')->getMock();
-        $mock3 = $this->getMockBuilder('Stas\CalendarBundle\Entity\Exercise')->getMock();
+        $mock1 = $this->getMockBuilder('AppBundle\Entity\Exercise')->getMock();
+        $mock2 = $this->getMockBuilder('AppBundle\Entity\Exercise')->getMock();
+        $mock3 = $this->getMockBuilder('AppBundle\Entity\Exercise')->getMock();
         $expectedResult = array(
             'today' => array($mock1),
             'one-week-ago' => array($mock2),
             'two-week-ago' => array($mock3),
         );
 
-        $currentDate = '2014-09-10';
-        $oneWeekAgo = '2014-09-03';
-        $twoWeeksAgo = '2014-08-27';
+        $currentDate = new \DateTime('2014-09-10');
+        $oneWeekAgo = new \DateTime('2014-09-03');
+        $twoWeeksAgo = new \DateTime('2014-08-27');
 
         $this->entityManagerMock->expects($this->once())->method('getRepository')
-            ->with('Stas\CalendarBundle\Entity\Exercise')
+            ->with('AppBundle\Entity\Exercise')
             ->will($this->returnValue($this->repositoryMock));
 
         $this->repositoryMock->expects($this->at(0))->method('findBy')
-            ->with(array('user' => $this->userMock, 'date' => new \DateTime($currentDate)), null, null, null)
+            ->with(array('user' => $this->userMock, 'date' => $currentDate), null, null, null)
             ->will($this->returnValue(array($mock1)));
 
         $this->repositoryMock->expects($this->at(1))->method('findBy')
-            ->with(array('user' => $this->userMock, 'date' => new \DateTime($oneWeekAgo)), null, null, null)
+            ->with(array('user' => $this->userMock, 'date' => $oneWeekAgo), null, null, null)
             ->will($this->returnValue(array($mock2)));
 
         $this->repositoryMock->expects($this->at(2))->method('findBy')
-            ->with(array('user' => $this->userMock, 'date' => new \DateTime($twoWeeksAgo)), null, null, null)
+            ->with(array('user' => $this->userMock, 'date' => $twoWeeksAgo), null, null, null)
             ->will($this->returnValue(array($mock3)));
 
         $this->assertEquals($expectedResult, $this->service->getLastResults($this->userMock, $currentDate));

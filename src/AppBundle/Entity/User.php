@@ -1,10 +1,10 @@
 <?php
-namespace Stas\CalendarBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Stas\CalendarBundle\Entity\Exercise;
+use AppBundle\Entity\Exercise;
 
 /**
  * User
@@ -34,7 +34,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection()
      *
-     * @ORM\OneToMany(targetEntity="Stas\CalendarBundle\Entity\Exercise", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Exercise", mappedBy="user")
      */
     private $exercises;
 
